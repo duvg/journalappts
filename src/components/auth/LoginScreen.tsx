@@ -1,16 +1,19 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { isValidElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import {
-  login,
-  startGoogleLogin,
-  startLoginEmailPassword,
+  startGoogleLoginAction,
+  startLoginEmailPasswordAction,
 } from "../../redux/actions/auth";
-import { AuthPayload } from "../../redux/types/types";
+
+import validator from "validator";
+import { setErrorAction, unSetErrorAction } from "../../redux/actions/ui";
+import { AppState } from "../../redux/store/store";
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
+  const { msgError, loading } = useSelector((state: AppState) => state.ui);
 
   const [formValues, handleInputChanges, reset] = useForm({
     email: "dev@gmail.com",
@@ -19,20 +22,38 @@ export const LoginScreen = () => {
 
   const { email, password } = formValues;
 
+  const isFormValid = (): boolean => {
+    if (email.trim().length === 0 || !validator.isEmail(email)) {
+      dispatch(setErrorAction({ msgError: "Email is invalid" }));
+      return false;
+    } else if (password.trim().length === 0) {
+      dispatch(setErrorAction({ msgError: "Password is required" }));
+      return false;
+    }
+
+    dispatch(unSetErrorAction());
+
+    return true;
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(startLoginEmailPassword(email, password));
+    if (isFormValid()) {
+      dispatch(startLoginEmailPasswordAction(email, password));
+    }
   };
 
   const handleGoogleLogin = () => {
     console.log("work step 1");
-    dispatch(startGoogleLogin());
+    dispatch(startGoogleLoginAction());
   };
 
   return (
     <>
       <h3 className="auth__title mb-2">Login</h3>
+
+      {msgError && <div className="auth__alert-error">Error: {msgError}</div>}
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -52,7 +73,11 @@ export const LoginScreen = () => {
           onChange={handleInputChanges}
         />
 
-        <button type="submit" className="btn btn-primary btn-block">
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          disabled={loading}
+        >
           Login
         </button>
 

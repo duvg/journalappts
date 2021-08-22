@@ -4,6 +4,7 @@ import { LoginScreen } from "../components/auth/LoginScreen";
 import { RegisterScreen } from "../components/auth/RegisterScreen";
 
 export const AuthRouter = () => {
+  console.log("Cargando");
   return (
     <div className="auth__main">
       <h2 className="auth__title_app mb-4">

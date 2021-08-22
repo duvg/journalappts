@@ -1,6 +1,7 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { authReducer } from '../reducers/authReducer';
+import { uiReducer } from '../reducers/uiReducer';
 
 declare global {
     interface Window {
@@ -10,10 +11,13 @@ declare global {
 }
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const reducers = combineReducers({
-    auth: authReducer
+export const rootReducers = combineReducers({
+    auth: authReducer,
+    ui: uiReducer
 });
 
-export const store = createStore(reducers, composeEnhancers(
+export type AppState = ReturnType<typeof rootReducers>;
+
+export const store = createStore(rootReducers, composeEnhancers(
     applyMiddleware(thunk)
 ));

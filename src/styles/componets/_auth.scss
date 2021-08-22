@@ -56,9 +56,12 @@
 }
 
 .auth__alert-error {
-  background-color: red;
-  border-radius: 5px;
+  background-color: rgb(216, 6, 6);
+  border-radius: 2px;
+  font-size: 0.8rem;
   color: white;
   display: flex;
+  padding: 5px;
+  margin: 5px 0px;
   justify-content: center;
 }
