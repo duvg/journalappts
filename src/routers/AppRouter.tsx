@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { firebase } from "../firebase/firebase-config";
 import { JournalScreen } from "../components/journal/JournalScreen";

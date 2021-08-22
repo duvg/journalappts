@@ -1,8 +1,9 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import Swal from 'sweetalert2';
 import { AuthPayload, RegisterPayload, types } from '../types/types';
 import { firebase, googleAuthProvider } from '../../firebase/firebase-config';
-import { finishLoading, setErrorAction, startLoading } from './ui';
+import { finishLoading, startLoading } from './ui';
 
 
 export const startLoginEmailPasswordAction = (email: string, password: string) => {
@@ -17,9 +18,9 @@ export const startLoginEmailPasswordAction = (email: string, password: string) =
             }
             dispatch(loginAction(authenticatedUser));
             dispatch(finishLoading());
-        } catch (e) {
+        } catch (e: any) {
             dispatch(finishLoading());
-            dispatch(setErrorAction({msgError: "Invalid credentials"}));
+            Swal.fire('Error', e.message, 'error');
         }
     }
 }
@@ -27,9 +28,9 @@ export const startLoginEmailPasswordAction = (email: string, password: string) =
 
 // Login with google
 export const startGoogleLoginAction = () => {
-    console.log("despacahando");
+    
     return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-        console.log("worlk step 2");
+        
         firebase.auth().signInWithPopup(googleAuthProvider)
             .then(({ user }) => {
                 const googleuser = {
@@ -59,6 +60,7 @@ export const startRegisterWithEmailPasswordName = (registerUser: RegisterPayload
             })
             .catch(e => {
                 dispatch(finishLoading());
+                Swal.fire('Error', e.message, 'error');
                 console.log(e);
             });
         

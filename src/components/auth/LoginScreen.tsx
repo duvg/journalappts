@@ -45,7 +45,6 @@ export const LoginScreen = () => {
   };
 
   const handleGoogleLogin = () => {
-    console.log("work step 1");
     dispatch(startGoogleLoginAction());
   };
 
