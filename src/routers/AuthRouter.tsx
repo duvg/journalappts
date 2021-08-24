@@ -7,10 +7,10 @@ export const AuthRouter = () => {
   console.log("Cargando");
   return (
     <div className="auth__main">
-      <h2 className="auth__title_app mb-4">
+      <h2 className="auth__title_app mb-4 animate__animated animate__fadeInDown animate__faster">
         Journal <span>App</span>
       </h2>
-      <div className="auth_box-container">
+      <div className="auth_box-container animate__animated animate__fadeInUp animate__faster">
         <Switch>
           <Route exact path="/auth/login" component={LoginScreen} />
           <Route exact path="/auth/register" component={RegisterScreen} />

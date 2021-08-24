@@ -6,6 +6,7 @@
   font-size: 12px;
   padding: 7px 10px;
   transition: color 0.4s ease;
+  transition: background-color 0.4s ease;
 
   &:focus {
     outline: none;
@@ -27,6 +28,15 @@
 
   &:hover {
     background-color: darken($color: $secondary, $amount: 15);
+  }
+}
+
+.btn-danger {
+  background-color: $danger;
+
+  &:hover {
+    color: $white;
+    background-color: darken($color: $danger, $amount: 10);
   }
 }
 

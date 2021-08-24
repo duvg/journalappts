@@ -12,24 +12,24 @@ const initialState: InitialState = {
 
 export const uiReducer = (state= initialState, action:types ) => {
     switch (action.type) {
-        case "[UI] UiSetError": {
+        case "[UI] Ui Set Error": {
             
             return {
                 ...state,
                 msgError: action.payload.msgError
             }
             }
-        case "[UI] UiUnsetError":
+        case "[UI] Ui Unset Error":
             return {
                 ...state,
                 msgError: null
             }
-        case "[UI] UiStartLoading":
+        case "[UI] Ui Start Loading":
             return {
                 ...state,
                 loading: true
             }
-        case "[UI] UiFinishLoading":
+        case "[UI] Ui Finish Loading":
             return {
                 ...state,
                 loading: false

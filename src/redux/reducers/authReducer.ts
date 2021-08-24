@@ -1,4 +1,4 @@
-import { types } from "../types/types";
+import { authTypes } from "../types/authTypes";
 
 interface authReducerState {
     id: string,
@@ -10,7 +10,7 @@ const initialState: authReducerState = {
     name: ""
 }
 
-export const authReducer = (state:authReducerState = initialState, action: types) => {
+export const authReducer = (state = initialState, action: authTypes) => {
     switch (action.type) {
         case "[Auth] Login": {
             

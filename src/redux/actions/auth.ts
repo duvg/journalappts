@@ -1,9 +1,11 @@
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import Swal from 'sweetalert2';
-import { AuthPayload, RegisterPayload, types } from '../types/types';
+import { types } from '../types/types';
+import {AuthPayload, RegisterPayload } from '../types/authTypes';
 import { firebase, googleAuthProvider } from '../../firebase/firebase-config';
 import { finishLoading, startLoading } from './ui';
+import { noteLogout } from './notes';
 
 
 export const startLoginEmailPasswordAction = (email: string, password: string) => {
@@ -67,23 +69,26 @@ export const startRegisterWithEmailPasswordName = (registerUser: RegisterPayload
     }
 }
 
-// Set data user in redux
-export const loginAction = (authUser: AuthPayload): types => ({
-    type: "[Auth] Login",
-    payload: authUser
-});
 
 
 export const startLogOutAction = () => {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
         try {
             await firebase.auth().signOut();
-            dispatch( logOutAction() );
+            dispatch(logOutAction());
+            dispatch(noteLogout());
         } catch (e) {
             console.log(e);
         }
     }
 }
+
+// Set data user in redux
+export const loginAction = (authUser: AuthPayload): types => ({
+    type: "[Auth] Login",
+    payload: authUser
+});
+
 
 export const logOutAction = (): types => {
     return {
